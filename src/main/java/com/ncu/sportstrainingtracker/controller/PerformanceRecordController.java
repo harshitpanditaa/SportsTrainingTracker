@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class PerformanceRecordController {
                     schema = @Schema(implementation = PerformanceRecord.class)))
     @ApiResponse(responseCode = "400", description = "Invalid input")
     @ApiResponse(responseCode = "404", description = "Athlete not found")
+    @PreAuthorize("hasAuthority('COACH')")
     @PostMapping("/athlete/{athleteId}")
     public ResponseEntity<PerformanceRecord> addPerformanceRecord(
             @Parameter(description = "ID of the athlete", required = true) @PathVariable Long athleteId,
@@ -46,6 +48,7 @@ public class PerformanceRecordController {
                     schema = @Schema(implementation = PerformanceRecord.class)))
     @ApiResponse(responseCode = "400", description = "Invalid input")
     @ApiResponse(responseCode = "404", description = "Performance record not found")
+    @PreAuthorize("hasAuthority('COACH')")
     @PutMapping("/{recordId}")
     public ResponseEntity<PerformanceRecord> updatePerformanceRecord(
             @Parameter(description = "ID of the performance record to update", required = true) @PathVariable Long recordId,
@@ -60,6 +63,7 @@ public class PerformanceRecordController {
     @Operation(summary = "Delete a performance record by ID")
     @ApiResponse(responseCode = "204", description = "Performance record deleted successfully")
     @ApiResponse(responseCode = "404", description = "Performance record not found")
+    @PreAuthorize("hasAuthority('COACH')")
     @DeleteMapping("/{recordId}")
     public ResponseEntity<Void> deletePerformanceRecord(
             @Parameter(description = "ID of the performance record to delete", required = true) @PathVariable Long recordId) {
@@ -72,6 +76,7 @@ public class PerformanceRecordController {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(type = "array", implementation = PerformanceRecord.class)))
     @ApiResponse(responseCode = "404", description = "Athlete not found")
+    @PreAuthorize("hasAnyAuthority('ANALYST', 'COACH')")
     @GetMapping("/athlete/{athleteId}")
     public ResponseEntity<List<PerformanceRecord>> getPerformanceRecordsByAthlete(
             @Parameter(description = "ID of the athlete", required = true) @PathVariable Long athleteId) {
@@ -83,6 +88,7 @@ public class PerformanceRecordController {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(type = "array", implementation = PerformanceRecord.class)))
     @ApiResponse(responseCode = "404", description = "Athlete not found")
+    @PreAuthorize("hasAnyAuthority('ANALYST', 'COACH')")
     @GetMapping("/athlete/{athleteId}/metric/{metric}")
     public ResponseEntity<List<PerformanceRecord>> getPerformanceRecordsByAthleteAndMetric(
             @Parameter(description = "ID of the athlete", required = true) @PathVariable Long athleteId,
@@ -94,6 +100,7 @@ public class PerformanceRecordController {
     @ApiResponse(responseCode = "200", description = "Successful retrieval",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(type = "array", implementation = PerformanceRecord.class)))
+    @PreAuthorize("hasAnyAuthority('ANALYST', 'COACH')")
     @GetMapping("/leaderboard/{metric}")
     public ResponseEntity<List<PerformanceRecord>> getLeaderboard(
             @Parameter(description = "Performance metric to get the leaderboard for", required = true) @PathVariable String metric,

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class AthleteController {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Athlete.class)))
     @ApiResponse(responseCode = "400", description = "Invalid input")
+    @PreAuthorize("hasAuthority('COACH')")
     @PostMapping
     public ResponseEntity<Athlete> addAthlete(@RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Athlete object to be added",
@@ -41,6 +43,7 @@ public class AthleteController {
                     schema = @Schema(implementation = Athlete.class)))
     @ApiResponse(responseCode = "400", description = "Invalid input")
     @ApiResponse(responseCode = "404", description = "Athlete not found")
+    @PreAuthorize("hasAuthority('COACH')")
     @PutMapping("/{id}")
     public ResponseEntity<Athlete> updateAthlete(@PathVariable Long id, @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Updated athlete object",
@@ -53,6 +56,7 @@ public class AthleteController {
     @ApiResponse(responseCode = "200", description = "Successful retrieval",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(type = "array", implementation = Athlete.class)))
+    @PreAuthorize("hasAnyAuthority('ANALYST', 'COACH')")
     @GetMapping
     public ResponseEntity<List<Athlete>> getAllAthletes() {
         return ResponseEntity.ok(athleteService.getAllAthletes());
@@ -63,6 +67,7 @@ public class AthleteController {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Athlete.class)))
     @ApiResponse(responseCode = "404", description = "Athlete not found")
+    @PreAuthorize("hasAnyAuthority('ANALYST', 'COACH')")
     @GetMapping("/{id}")
     public ResponseEntity<Athlete> getAthleteById(@PathVariable Long id) {
         return ResponseEntity.ok(athleteService.getAthleteById(id));
@@ -71,6 +76,7 @@ public class AthleteController {
     @Operation(summary = "Delete an athlete by ID")
     @ApiResponse(responseCode = "204", description = "Athlete deleted successfully")
     @ApiResponse(responseCode = "404", description = "Athlete not found")
+    @PreAuthorize("hasAuthority('COACH')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAthlete(@PathVariable Long id) {
         athleteService.deleteAthlete(id);

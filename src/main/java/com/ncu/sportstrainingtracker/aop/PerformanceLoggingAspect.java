@@ -35,7 +35,7 @@ public class PerformanceLoggingAspect {
     // 3. Log exceptions thrown anywhere in the service layer
     @AfterThrowing(pointcut = "execution(* com.ncu.sportstrainingtracker.service..*(..))", throwing = "ex")
     public void logServiceExceptions(Exception ex) {
-        log.error("❌ Exception in service layer: {}", ex.getMessage());
+        log.error("Exception in service layer: {}", ex.getMessage());
     }
 
     // 4. Measure and log execution time
