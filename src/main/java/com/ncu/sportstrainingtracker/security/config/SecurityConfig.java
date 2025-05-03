@@ -1,5 +1,6 @@
-package com.ncu.sportstrainingtracker.security;
+package com.ncu.sportstrainingtracker.security.config;
 
+import com.ncu.sportstrainingtracker.security.service.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;

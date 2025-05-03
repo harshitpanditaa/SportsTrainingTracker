@@ -1,4 +1,4 @@
-package com.ncu.sportstrainingtracker.security;
+package com.ncu.sportstrainingtracker.security.service;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

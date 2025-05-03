@@ -1,4 +1,4 @@
-package com.ncu.sportstrainingtracker.security;
+package com.ncu.sportstrainingtracker.security.service;
 
 import com.ncu.sportstrainingtracker.security.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

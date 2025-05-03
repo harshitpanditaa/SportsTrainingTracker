@@ -3,7 +3,7 @@ package com.ncu.sportstrainingtracker.security.controller;
 import com.ncu.sportstrainingtracker.security.entity.Role;
 import com.ncu.sportstrainingtracker.security.entity.User;
 import com.ncu.sportstrainingtracker.security.repository.UserRepository;
-import com.ncu.sportstrainingtracker.security.JwtUtil;
+import com.ncu.sportstrainingtracker.security.service.JwtUtil;
 import org.springframework.security.authentication.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;

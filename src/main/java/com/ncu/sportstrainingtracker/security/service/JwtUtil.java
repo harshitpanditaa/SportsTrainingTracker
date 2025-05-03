@@ -1,4 +1,4 @@
-package com.ncu.sportstrainingtracker.security;
+package com.ncu.sportstrainingtracker.security.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
