@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/athletes/**", "/api/performance/**").hasAnyAuthority("COACH", "ANALYST")
                         .requestMatchers("/api/athletes/add", "/api/performance/add").hasAuthority("COACH")
                         .anyRequest().authenticated()
